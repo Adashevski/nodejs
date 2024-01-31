@@ -1,5 +1,5 @@
-import { User } from "../../models/schemas/userSchema.js";
+import { Contact } from "../../models/schemas/contactSchema.js";
 
 export const updateContact = (contactId, body) => {
-  return User.findByIdAndUpdate({ _id: contactId }, body);
+  return Contact.findByIdAndUpdate({ _id: contactId }, body);
 };

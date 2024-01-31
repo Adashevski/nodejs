@@ -1,5 +1,5 @@
-import { User } from "../../models/schemas/userSchema.js";
+import { Contact } from "../../models/schemas/contactSchema.js";
 
 export async function getContactById(contactId) {
-  return User.findOne({ _id: contactId });
+  return Contact.findOne({ _id: contactId });
 }
