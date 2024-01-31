@@ -4,8 +4,8 @@ export async function createContacts(req, res, next) {
   const { name, email, phone } = req.body;
   try {
     const newContact = await addContact({ name, email, phone });
-    res.status(201).json(newContact);
+    return res.status(201).json(newContact);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 }

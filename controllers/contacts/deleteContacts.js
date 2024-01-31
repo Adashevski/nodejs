@@ -9,20 +9,20 @@ export async function deleteContacts(req, res, next) {
     if (contact) {
       await removeContact(contactId);
 
-      res.status(200).json({
+      return res.status(200).json({
         status: "success",
         code: 200,
         message: "Contact deleted",
       });
     } else {
-      res.status(404).json({
+      return res.status(404).json({
         status: "Contact not found",
         code: 404,
         message: "Not found",
       });
     }
   } catch (err) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "Internal Server Error",
       code: 500,
       message: err?.message,
