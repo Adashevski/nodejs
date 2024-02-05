@@ -1,5 +1,5 @@
-import { User } from "../../models/schemas/userSchema.js";
+import { Contact } from "../../models/schemas/contactSchema.js";
 
 export const addContact = (body) => {
-  return User.create(body);
+  return Contact.create(body);
 };

@@ -1,5 +1,5 @@
-import { User } from "../../models/schemas/userSchema.js";
+import { Contact } from "../../models/schemas/contactSchema.js";
 
 export const removeContact = (contactId) => {
-  return User.findByIdAndDelete({ _id: contactId });
+  return Contact.findByIdAndDelete({ _id: contactId });
 };

@@ -5,11 +5,11 @@ export async function showContacts(req, res, next) {
     const { contactId } = req.params;
     const contact = await getContactById(contactId);
     if (!contact) {
-      res.status(404).json({ message: "Not found" });
+      return res.status(404).json({ message: "Not found" });
     } else {
-      res.status(200).json(contact);
+      return res.status(200).json(contact);
     }
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 }
