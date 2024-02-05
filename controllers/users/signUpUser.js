@@ -1,5 +1,6 @@
 import User from "../../models/schemas/userSchema.js";
 import { addUserSchema } from "../../models/schemas/joiSchemas/addUserSchema.js";
+import gravatar from "gravatar";
 
 export async function signUpUser(req, res, next) {
   const { email, password, subscription } = req.body;
@@ -29,6 +30,10 @@ export async function signUpUser(req, res, next) {
   try {
     const newUser = new User({ email, subscription });
     newUser.setPassword(password);
+
+    const avatar = gravatar.url(email, { s: "250", d: "retro" });
+    newUser.avatarURL = avatar;
+
     await newUser.save();
     res.status(201).json({
       status: "success",
