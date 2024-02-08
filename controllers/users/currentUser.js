@@ -1,6 +1,6 @@
 import User from "../../models/schemas/userSchema.js";
 
-export async function verifyUser(req, res, next) {
+export async function currentUser(req, res, next) {
   const { email, subscription } = req.user;
 
   try {

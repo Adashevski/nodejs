@@ -24,6 +24,14 @@ export async function logInUser(req, res, next) {
       data: "Bad request",
     });
   }
+  if (!user.verify) {
+    return res.status(401).json({
+      status: "error",
+      code: 401,
+      message: "Email is not verified",
+      data: "Unauthorized",
+    });
+  }
   try {
     const payload = {
       id: user.id,
