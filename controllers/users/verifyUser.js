@@ -1,43 +1,46 @@
+import { sendVerificationEmail } from "../../services/sendVerificationEmail.js";
 import User from "../../models/schemas/userSchema.js";
 
-export async function verifyUser(req, res, next) {
-  const { email, subscription } = req.user;
-
+export async function verifyUser(req, res) {
   try {
-    const id = req.user.id;
-    const user = async (id) => {
-      try {
-        const user = await User.findById(id);
-        if (!user) {
-          return null;
-        } else {
-          return user;
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    const { email } = req.body;
+    const user = await User.findOne({ email });
 
     if (!user) {
-      return res.json({
+      return res.status(404).json({
         status: "error",
-        code: 401,
-        data: {
-          message: `Unauthorized`,
-        },
-      });
-    } else {
-      return res.json({
-        status: "success",
-        code: 200,
-        data: {
-          message: `Authorization successful`,
-          email,
-          subscription,
-        },
+        code: 404,
+        message: "User not found",
+        data: "Not Found",
       });
     }
+
+    if (user.verify) {
+      return res.status(400).json({
+        status: "error",
+        code: 400,
+        message: "Verification has already been passed",
+        data: "Bad Request",
+      });
+    }
+
+    await sendVerificationEmail({
+      email,
+      verificationToken: user.verificationToken,
+    });
+
+    res.status(200).json({
+      status: "success",
+      code: 200,
+      message: "Verification email sent",
+    });
   } catch (err) {
     console.error(err);
+    res.status(500).json({
+      status: "error",
+      code: 500,
+      message: "Internal Server Error",
+      data: "Email Sending Failure",
+    });
   }
 }
