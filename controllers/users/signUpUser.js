@@ -1,10 +1,10 @@
 import User from "../../models/schemas/userSchema.js";
-import { addUserSchema } from "../../models/schemas/joiSchemas/addUserSchema.js";
 import gravatar from "gravatar";
-import { generateVerificationToken } from "../../middleware/verificationToken.js";
+import { addUserSchema } from "../../models/schemas/joiSchemas/addUserSchema.js";
+import { generateVerificationToken } from "../../utilities/verificationToken.js";
 import { sendVerificationEmail } from "../../services/sendVerificationEmail.js";
 
-export async function signUpUser(req, res, next) {
+export async function signUpUser(req, res) {
   const { email, password, subscription } = req.body;
   const user = await User.findOne({ email });
 
